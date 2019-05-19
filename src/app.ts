@@ -1,3 +1,3 @@
-import { askReportYear } from "./models/report";
+import { askReportYear } from "./controllers/report";
 
 askReportYear();

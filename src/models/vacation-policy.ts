@@ -1,4 +1,4 @@
-import * as DateUtil from "../util/date";
+import * as DateUtil from "../service/date";
 import { User } from "./user";
 
 export const MIN_VACATION_DAYS = 26;

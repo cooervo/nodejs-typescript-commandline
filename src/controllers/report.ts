@@ -1,8 +1,8 @@
 import * as readline from "readline";
-import * as User from "./user";
-import * as File from "../util/file";
-import * as Validate from "../util/validate";
-import * as Vacation from "./vacation-policy";
+import * as User from "../models/user";
+import * as File from "../service/file";
+import * as Validate from "../service/validate";
+import * as Vacation from "../models/vacation-policy";
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -33,8 +33,9 @@ const writeReport = (yearInput: Date, users: User.User[]) => {
 
     // Write content
     users.forEach(u => {
-        appendTxt = `Employee: ${u.name}, vacation days: ${Vacation.getVacationDays(u, yearInput)}.\n`;
+        appendTxt = `Employee: ${u.name}\nVacation days: ${Vacation.getVacationDays(u, yearInput)}\n\n`;
         File.appendText(filePath, appendTxt);
     });
+    console.log("Open report.txt at root dir.");
 };
 
