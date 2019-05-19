@@ -1,19 +1,25 @@
-import express from "express";
-import bodyParser from "body-parser";
-import path from "path";
-import expressValidator from "express-validator";
-import bluebird from "bluebird";
 import * as readline from "readline";
 import * as User from "./models/user";
-import * as DateUtil from "./util/date";
+import * as File from "./util/file";
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
+const writeReport = (yearInput: Date, users: User.User[]) => {
+    const filePath = "./report.txt";
+    File.cleanFile(filePath);
+    let appendTxt = `Vacation days for year: ${yearInput.getFullYear()}\n\n`;
+    File.appendText(filePath, appendTxt);
+    users.forEach(u => {
+        appendTxt = `Employee: ${u.name}, vacation days: ${u.getVacationsDaysWithPolicy(yearInput)}.\n`;
+        File.appendText(filePath, appendTxt);
+    });
+};
+
 const askYear = () => {
-    rl.question("Write year to report (format as YYYY) ", (input: string) => {
+    rl.question("Write year to report (format as YYYY): ", (input: string) => {
         if (isNaN(Number(input))) {
             console.log("Error: Please try again, with a valid number.\n");
             askYear();
@@ -28,13 +34,7 @@ const askYear = () => {
 
         const yearInput: Date = new Date(`${Number(input)} 12 31`);
         const users = User.getUsers(yearInput);
-
-        users.forEach(u => {
-            const date = new Date();
-            console.log(`birth: ${DateUtil.dateFormat(u.birthDate)} | start: ${DateUtil.dateFormat(u.startDate)} | user age: ${u.age}`);
-            console.log(`vacation days: ${u.getVacationsDaysWithPolicy(yearInput)}`);
-            console.log("\n");
-        });
+        writeReport(yearInput, users);
         rl.close();
     });
 };

@@ -1,16 +1,6 @@
 import * as DateUtil from "../util/date";
 
-export interface IUser {
-    name: string;
-    birthDate: Date;
-    startDate: Date;
-    vacationDays: number;
-    age: number;
-
-    calculateAgeForYear(yearDate: Date): number;
-}
-
-export class User implements IUser {
+export class User {
     age: number;
     name: string;
     birthDate: Date;
@@ -44,14 +34,23 @@ export class User implements IUser {
      */
     getVacationsDaysWithPolicy(yearInput: Date): number {
         const inputBeforeStartDate = yearInput.getTime() < this.startDate.getTime();
+        // if input before start date
+        // then user hasn't started therefore no vacation days
         if (inputBeforeStartDate) {
-            // if input before start date
-            // then user hasn't started therefore no vacation days
             return 0;
         }
 
+        // if started in the course of the year
+        if (yearInput.getFullYear() === this.startDate.getFullYear()) {
+            const totalMonths = 12;
+            const vacStartsNextMonth = this.startDate.getMonth() + 1;
+            const vacationGivingMonths = totalMonths - vacStartsNextMonth;
+            return Math.floor((this.vacationDays / 12) * vacationGivingMonths);
+        }
+
+        // if age is less than 30,
+        // then no extra days just return vacationDays
         if (this.age < 30) {
-            // if age is less than 30, then no extra days just return vacationDays
             return this.vacationDays;
         }
 
@@ -69,11 +68,6 @@ export class User implements IUser {
 
 export const getUsers = (inputYear: Date): User[] => {
     return [
-        new User("Mateo Cuervo",
-            new Date("1986 03 02"),
-            new Date("2019 05 18"),
-            inputYear
-        ),
         new User("Hans Müller",
             new Date("1950 12 30"),
             new Date("2001 01 01"),
