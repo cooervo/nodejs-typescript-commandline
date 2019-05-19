@@ -1,11 +1,11 @@
-import * as DateUtil from "../util/date";
+import { MIN_VACATION_DAYS } from "./vacation-policy";
 
 export class User {
     age: number;
     name: string;
     birthDate: Date;
     startDate: Date;
-    vacationDays: number = 26;
+    vacationDays: number = MIN_VACATION_DAYS;
 
     constructor(name: string,
                 birthDate: Date,
@@ -15,56 +15,23 @@ export class User {
         this.name = name;
         this.birthDate = birthDate;
         this.startDate = startDate;
-        this.age = this.calculateAgeForYear(year);
-        this.vacationDays = vacationDays || this.vacationDays;
+        this.age = this.getAge(year);
+        if (vacationDays) {
+            this.vacationDays = vacationDays;
+        }
     }
 
-    calculateAgeForYear(yearDate: Date): number {
+    /**
+     * Gets the user age based on the given yearDate
+     */
+    getAge(yearDate: Date): number {
         let age = yearDate.getFullYear() - this.birthDate.getFullYear();
         if (age < 0) {
             age = 0;
         }
         return age;
     }
-
-    /**
-     * Returns the vacations days taking into account the HR policy:
-     * 1 extra day per 5 years
-     * @param yearInput
-     */
-    getVacationsDaysWithPolicy(yearInput: Date): number {
-        const inputBeforeStartDate = yearInput.getTime() < this.startDate.getTime();
-        // if input before start date
-        // then user hasn't started therefore no vacation days
-        if (inputBeforeStartDate) {
-            return 0;
-        }
-
-        // if started in the course of the year
-        if (yearInput.getFullYear() === this.startDate.getFullYear()) {
-            const totalMonths = 12;
-            const vacStartsNextMonth = this.startDate.getMonth() + 1;
-            const vacationGivingMonths = totalMonths - vacStartsNextMonth;
-            return Math.floor((this.vacationDays / 12) * vacationGivingMonths);
-        }
-
-        // if age is less than 30,
-        // then no extra days just return vacationDays
-        if (this.age < 30) {
-            return this.vacationDays;
-        }
-
-        let extraDays = 0;
-        const birth30th = new Date(this.birthDate.setFullYear(this.birthDate.getFullYear() + 30));
-        const mostRecentDate = new Date(Math.max(birth30th.getTime(), this.startDate.getTime()));
-        const diffYearInputAndMostRecent = DateUtil.yearsDiff(yearInput, mostRecentDate);
-        if (diffYearInputAndMostRecent > 0) {
-            extraDays = Math.floor(diffYearInputAndMostRecent / 5);
-        }
-        return this.vacationDays + extraDays;
-    }
 }
-
 
 export const getUsers = (inputYear: Date): User[] => {
     return [

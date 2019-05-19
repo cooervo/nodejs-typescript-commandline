@@ -1,4 +1,9 @@
-# TypeScript Node Starter
+// todo manual test (before being born, hasn't started date, same year, 5 years in future, special policy)
+// todo unit test
+// todo clean readme
+// todo build script && instructions
+
+# TypeScript Node
 
 [![Dependency Status](https://david-dm.org/Microsoft/TypeScript-Node-Starter.svg)](https://david-dm.org/Microsoft/TypeScript-Node-Starter) [![Build Status](https://travis-ci.org/Microsoft/TypeScript-Node-Starter.svg?branch=master)](https://travis-ci.org/Microsoft/TypeScript-Node-Starter) 
 
