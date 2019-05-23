@@ -1,17 +1,17 @@
-Vacation days for year: 2020
-
-Employee: Peter Klever
-Vacation days: 27
-
-Employee: Hans Müller
-Vacation days: 29
-
-Employee: Angelika Fringe
-Vacation days: 29
-
-Employee: Marina Helter
-Vacation days: 26
+Vacation days for year: 1999
 
 Employee: Sepp Meier
-Vacation days: 26
+Vacation days: 0
+
+Employee: Angelika Fringe
+Vacation days: 0
+
+Employee: Marina Helter
+Vacation days: 0
+
+Employee: Peter Klever
+Vacation days: 0
+
+Employee: Hans Müller
+Vacation days: 0
 

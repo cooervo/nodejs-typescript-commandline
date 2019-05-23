@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/Microsoft/TypeScript-Node-Starter"
   },
-  "author": "Bowden Kelly",
+  "author": "Mateo Cuervo",
   "license": "MIT",
   "scripts": {
     "start": "tsc && npm run app",

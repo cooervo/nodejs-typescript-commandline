@@ -10,8 +10,9 @@ export const AGE_FOR_EXTRAS = 30;
  */
 export const getVacationDays = (u: User, yearInput: Date): number => {
     const inputBeforeStartDate = yearInput.getTime() < u.startDate.getTime();
+
     // if input before start date
-    // then user hasn't started therefore no vacation days
+    // then user hasn't started working (no vacation days)
     if (inputBeforeStartDate) {
         return 0;
     }
@@ -30,6 +31,7 @@ export const getVacationDays = (u: User, yearInput: Date): number => {
         return u.vacationDays;
     }
 
+    // if age more than 30
     let extraDays = 0;
     const birth30th = new Date(u.birthDate.setFullYear(u.birthDate.getFullYear() + AGE_FOR_EXTRAS));
     const mostRecentDate = new Date(Math.max(birth30th.getTime(), u.startDate.getTime()));

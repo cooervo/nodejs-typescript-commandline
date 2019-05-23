@@ -5,7 +5,7 @@ export class User {
     name: string;
     birthDate: Date;
     startDate: Date;
-    vacationDays: number = MIN_VACATION_DAYS;
+    vacationDays: number = MIN_VACATION_DAYS; // default
 
     constructor(name: string,
                 birthDate: Date,
@@ -36,8 +36,8 @@ export class User {
 export const getUsers = (inputYear: Date): User[] => {
     return [
         new User("Hans Müller",
-            new Date("1950 12 30"),
-            new Date("2001 01 01"),
+            new Date("1950 12 30"), // Birthdays
+            new Date("2001 01 01"), // Started work date
             inputYear
         ),
         new User("Angelika Fringe",
@@ -49,7 +49,7 @@ export const getUsers = (inputYear: Date): User[] => {
             new Date("1991 07 12"),
             new Date("2016 05 15"),
             inputYear,
-            27,
+            27,              // special contract
         ),
         new User("Marina Helter",
             new Date("1970 01 26"),
